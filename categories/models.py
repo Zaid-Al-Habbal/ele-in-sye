@@ -22,3 +22,11 @@ class Category(models.Model):
             parts.append(parent.name)
             parent = parent.parent
         return " > ".join(reversed(parts))
+
+
+class SpecificationTemplate(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='spec_templates')
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name} ({self.category.name})"

@@ -4,7 +4,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from categories import views
 
 urlpatterns = [
-    path('categories/', views.category_list),
+    # path('categories/', views.category_list),
+    path('categories/', views.CategoryList.as_view()),
     path('categories/<pk>/', views.category_detail),
 ]
 

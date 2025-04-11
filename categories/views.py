@@ -2,8 +2,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import permissions
 from categories.models import Category
-from categories.serializers import CategorySerializer
+from categories.serializers import CategoryListSerializer, CategoryDetailSerializer
 
 # Function-based view:
 #-------------------------------------------------------------
@@ -14,11 +15,11 @@ from categories.serializers import CategorySerializer
 #     # list all categories, or create a new one
 #     if request.method == 'GET':
 #         categories = Category.objects.all()
-#         serializer = CategorySerializer(categories, many=True)
+#         serializer = CategoryListSerializer(categories, many=True)
 #         return Response(serializer.data)
 
 #     elif request.method == 'POST':
-#         serializer = CategorySerializer(data=request.data)
+#         serializer = CategoryDetailSerializer(data=request.data)
 #         if serializer.is_valid():
 #             serializer.save()
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -29,12 +30,12 @@ from categories.serializers import CategorySerializer
 class CategoryList(APIView):
     def get(self, request, format=None):
         categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
+        serializer = CategoryListSerializer(categories, many=True)
         return Response(serializer.data)
 
 
     def post(self, request, format=None):
-        serializer = CategorySerializer(data=request.data)
+        serializer = CategoryDetailSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -53,11 +54,11 @@ def category_detail(request, pk, format=None):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = CategorySerializer(category)
+        serializer = CategoryDetailSerializer(category)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = CategorySerializer(category, data=request.data)
+        serializer = CategoryDetailSerializer(category, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

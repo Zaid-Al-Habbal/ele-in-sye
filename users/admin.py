@@ -4,7 +4,7 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ['email', 'first_name', 'last_name', 'is_staff']
+    list_display = ['email', 'first_name', 'last_name', 'is_verified', 'is_staff']
     search_fields = ['email']
     ordering = ['email']
     fieldsets = (

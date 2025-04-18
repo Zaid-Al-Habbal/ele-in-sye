@@ -143,6 +143,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/minute',        # 5 requests/minute for unauthenticated
+        'user': '10/minute',       # 10 requests/minute for authenticated
+        'login': '3/minute',       # custom scope for login
+    }
 }
 
 SIMPLE_JWT = {

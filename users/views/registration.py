@@ -9,21 +9,26 @@ from users.serializers.registration import RegisterSerializer
 from django.core.mail import send_mail
 from django.conf import settings
 
+from users.tokens import EmailVerificationToken
+
 class RegisterView(generics.CreateAPIView):
     queryset = get_user_model().objects.all()
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
 
-    def get_tokens_for_user(self, user):
-        refresh = RefreshToken.for_user(user)
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
+    # def get_tokens_for_user(self, user):
+    #     refresh = RefreshToken.for_user(user)
+    #     return {
+    #         'refresh': str(refresh),
+    #         'access': str(refresh.access_token),
+    #     }
+    def get_verification_token(self, user):
+        return str(EmailVerificationToken.for_user(user))
 
     def perform_create(self, serializer):
         user = serializer.save()
-        token = self.get_tokens_for_user(user)['access']
+        # token = self.get_tokens_for_user(user)['access']
+        token = self.get_verification_token(user)
         verify_url = f"http://localhost:8000/api/users/verify-email/?token={token}"
 
         send_mail(

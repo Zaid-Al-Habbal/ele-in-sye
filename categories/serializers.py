@@ -43,6 +43,5 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
             'parent_name',
             'subcategories'
         ]
-
         read_only_fields = ["created_at", "updated_at"]    
     

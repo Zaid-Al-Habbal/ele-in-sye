@@ -31,12 +31,6 @@ class VerifyEmailView(APIView):
         except Exception as e:
             return Response({'error': 'Invalid or expired token'}, status=status.HTTP_400_BAD_REQUEST)
 
-# def get_tokens_for_user(user):
-#     refresh = RefreshToken.for_user(user)
-#     return {
-#         'refresh': str(refresh),
-#         'access': str(refresh.access_token),
-#     }
 
 class ResendVerificationEmailView(APIView):
         
@@ -52,8 +46,8 @@ class ResendVerificationEmailView(APIView):
             verify_url = f"http://localhost:8000/api/users/verify-email/?token={token}"
 
             send_mail(
-                subject="Verify your email",
-                message=f"Click the link to verify: {verify_url}",
+                subject="Welcome to Ele-In-Sye",
+                message=f"After creating your account you need to verify it, so click the link to verify: {verify_url}",
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],
             )

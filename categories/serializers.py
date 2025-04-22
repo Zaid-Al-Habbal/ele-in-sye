@@ -1,5 +1,13 @@
 from rest_framework import serializers
-from categories.models import Category
+from .models import Category, SpecificationTemplate
+
+
+# For listing templates of a specific category:
+class TemplatesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpecificationTemplate
+        fields = ['name']
+
 
 # We will use this serializer when the user request ALL or a LIST of categories:
 # --------------------------------------------------------------------------------
@@ -20,6 +28,7 @@ class CategoryListSerializer(serializers.ModelSerializer):
 
         read_only_fields = ["created_at", "updated_at"]    
 
+
 #for return subcategories with the category requested: we used RecursiveField class
 # --------------------------------------------------------------------------------
 class RecursiveField(serializers.Serializer):
@@ -29,7 +38,8 @@ class RecursiveField(serializers.Serializer):
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
     subcategories = RecursiveField(many=True, read_only=True)
-    parent_name = serializers.StringRelatedField(source='parent', read_only=True)
+    parent_name = serializers.StringRelatedField(source='parent')
+    spec_templates = TemplatesListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Category
@@ -41,7 +51,8 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
             'updated_at',
             'parent',
             'parent_name',
-            'subcategories'
+            'subcategories',
+            'spec_templates'
         ]
         read_only_fields = ["created_at", "updated_at"]    
     

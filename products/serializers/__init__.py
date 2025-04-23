@@ -1,3 +1,3 @@
-from .product import ProductDetailSerializer
+from .product import ProductDetailSerializer, ProductListSerializer
 from .specification import ProductSpecificationSerializer
 

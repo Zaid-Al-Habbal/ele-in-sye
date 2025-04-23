@@ -74,3 +74,24 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 #         {"template": 3, "template_name": "OS", "value": "IOS"},
 #     ],
 # }
+
+class ProductListSerializer(serializers.ModelSerializer):
+    seller_name = serializers.StringRelatedField(source="seller")
+    category_name = serializers.StringRelatedField(source="category")
+
+    class Meta:
+        model = Product
+        fields = [
+            "id",
+            "title",
+            "price",
+            "condition",
+            "location",
+            "seller",
+            "seller_name",
+            "category",
+            "category_name",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["created_at", "update_at"]

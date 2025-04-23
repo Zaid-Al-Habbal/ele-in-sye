@@ -25,7 +25,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             "updated_at",
             "specifications",
         ]
-        read_only_fields = ["created_at", "update_at"]
+        read_only_fields = ["created_at", "update_at", "seller"]
 
 
     # override create method for writeable nested serializers:

@@ -1,5 +1,4 @@
 from rest_framework import generics
-from rest_framework.viewsets import ModelViewSet,
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from products.models import Product
@@ -11,11 +10,23 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductListSerializer
 
 
-class ProductViewSet():
+class ProductCreateView(generics.CreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(seller=self.request.user)
+
+
+class ProductEditView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    def perform_create(self, serializer):
-        # Associate current user as seller automatically
+    def perform_update(self, serializer):
         serializer.save(seller=self.request.user)
+
+    def get_queryset(self):
+        return Product.objects.filter(seller=self.request.user)
+    

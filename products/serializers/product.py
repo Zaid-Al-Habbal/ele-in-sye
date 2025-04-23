@@ -55,25 +55,6 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Duplicate specification templates are not allowed.")
         return data
 
-# {
-#     "id": 10,
-#     "title": "IPhone 14",
-#     "description": "great mobile",
-#     "price": "1500.00",
-#     "condition": "used",
-#     "location": "Damascus",
-#     "seller": 5,
-#     "seller_name": "Mohammed DADA",
-#     "category": 1,
-#     "category_name": "Smartphones",
-#     "created_at": "2025-04-19T13:57:57.251334Z",
-#     "updated_at": "2025-04-19T13:57:57.251376Z",
-#     "specifications": [
-#         {"template": 1, "template_name": "RAM", "value": "8"},
-#         {"template": 2, "template_name": "Screen", "value": "14 inche"},
-#         {"template": 3, "template_name": "OS", "value": "IOS"},
-#     ],
-# }
 
 class ProductListSerializer(serializers.ModelSerializer):
     seller_name = serializers.StringRelatedField(source="seller")

@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'users',
     # for logout
     'rest_framework_simplejwt.token_blacklist',
+    #for filters:
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -149,7 +151,11 @@ REST_FRAMEWORK = {
         'anon': '5/minute',        # 5 requests/minute for unauthenticated
         'user': '10/minute',       # 10 requests/minute for authenticated
         'login': '3/minute',       # custom scope for login
-    }
+    },
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    #for pagination:
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2
 }
 
 SIMPLE_JWT = {

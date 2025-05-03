@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
+
+
 from django_filters.rest_framework import OrderingFilter
 
 from products.models import Product
@@ -22,7 +24,12 @@ class ProductCreateView(generics.CreateAPIView):
         serializer.save(seller=self.request.user)
 
 
-class ProductEditView(generics.RetrieveUpdateDestroyAPIView):
+class ProductShowView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailSerializer
+
+
+class ProductEditView(generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -33,3 +40,4 @@ class ProductEditView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Product.objects.filter(seller=self.request.user)
     
+

@@ -1,1 +1,1 @@
-from .basic import *
+from .productViews import *
